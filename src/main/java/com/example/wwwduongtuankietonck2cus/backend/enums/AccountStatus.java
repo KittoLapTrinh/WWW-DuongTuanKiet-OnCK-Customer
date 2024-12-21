@@ -8,4 +8,8 @@ public enum AccountStatus {
     AccountStatus(String value) {
         this.value = value;
     }
+
+    private String getValue(){
+        return value;
+    }
 }

@@ -31,8 +31,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Account> accounts;
 
-
-    public Customer(String name, String address, String email, LocalDate dob) {
+    public Customer(String address, LocalDate dob, String email, String name) {
         this.name = name;
         this.address = address;
         this.email = email;

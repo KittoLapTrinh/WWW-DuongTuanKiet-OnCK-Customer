@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {
-    private static Logger log = LoggerFactory.getLogger(CustomerController.class);
+//    private static Logger log = LoggerFactory.getLogger(CustomerController.class);
     private final CustomerService customerService;
     private final AccountService accountService;
 
@@ -66,18 +66,18 @@ public class CustomerController {
     }
 
     @PostMapping("/customers/insert")
-    public String insertCuaHang(Model model,
+    public String insertCustomer(Model model,
                                 @RequestParam("address") String address,
                                 @RequestParam("dob") LocalDate dob,
                                 @RequestParam("email") String email,
                                 @RequestParam("name") String name){
-        customerService.addCustomer(new Customer(address, name, email, dob));
-        model.addAttribute("cuaHang", customerService.getAllCustomers());
+        customerService.addCustomer(new Customer(address, dob,email,name));
+        model.addAttribute("customers", customerService.getAllCustomers());
         return "redirect:/customers";
     }
 
     @PostMapping("/customers/delete/{id}")
-    public String deleteCuaHang(@PathVariable Long id){
+    public String deleteCustomer(@PathVariable Long id){
         customerService.deleteCustomer(id);
         return "redirect:/customers";
     }
@@ -90,17 +90,12 @@ public class CustomerController {
     }
 
     @PostMapping("/customers/edit/{id}")
-    public String updateCandidate(@PathVariable long id,
+    public String updateCustomer(Model model, @PathVariable long id,
                                   @RequestParam("address") String address,
                                   @RequestParam("dob") LocalDate dob,
                                   @RequestParam("email") String email,
-                                  @RequestParam("name") String name,
-                                  Model model){
+                                  @RequestParam("name") String name){
         Customer customer = customerService.getCustomerById(id);
-        if(customer == null) {
-            model.addAttribute("errorMessage", "Customer not found");
-            return "error";
-        }
         customer.setAddress(address);
         customer.setDob(dob);
         customer.setEmail(email);
@@ -111,7 +106,7 @@ public class CustomerController {
     }
 
     @PostMapping("/customers/update")
-    public String updateCandidate(@ModelAttribute Customer customer){
+    public String updateCustomer(@ModelAttribute Customer customer){
         customerService.updateCustomer(customer);
         return "redirect:/customers";
     }
