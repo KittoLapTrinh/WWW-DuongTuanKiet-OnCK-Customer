@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>Accounts</h1>
+
+<form th:action="@{/report1}" method="get">
+    <label>Input min balance: </label>
+    <input name="min" type="number" placeholder="Min Balance" required>
+    <label>Input max balance: </label>
+    <input name="max" type="number" placeholder="Max Balance" required>
+    <button type="submit">Find Account</button>
+</form>
+
+<table th:if="${accounts}">
+    <thead>
+    <tr>
+        <td>ID Account</td>
+        <td>Account Name</td>
+        <td>Account Balance</td>
+        <td>Account Status</td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="account : ${accounts}">
+        <td th:text="${account.id}"></td>
+        <td th:text="${account.customer.name}"></td>
+        <td th:text="${account.balance}"></td>
+        <td th:text="${account.status}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

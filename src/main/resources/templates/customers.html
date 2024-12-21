@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<h1>List Customer</h1><br>
+<h3>Insert Customer</h3>
+<div class="form-insert">
+    <form action="customers/insert" method="post" onsubmit="return showInsertMessage()">
+        <label>Address: </label>
+        <input type="text" id="address" name = "address" required><br>
+
+        <label>Dob: </label>
+        <input type="date" id="dob" name = "dob" required><br>
+
+        <label>Email: </label>
+        <input type="email" id="email" name = "email" required><br>
+
+        <label>Name: </label>
+        <input type="text" id="name" name = "name" required><br>
+
+        <button class="btn-insert" type="submit">Insert</button>
+    </form>
+    <script>
+        function showInsertMessage(){
+            alert("Customer inserted successfully");
+            return true;
+        }
+    </script>
+
+</div>
+
+<br>
+
+<!--<form action="@{/customers/{id}/filter(id=${customer.id})}" method="get">-->
+<!--    <label for="status">Filter by Status:</label>-->
+<!--    <select name="status" id="status">-->
+<!--        <option value="">ALL</option>-->
+<!--        <th:block th:each="status : ${status}">-->
+<!--            <option th:value="${status.name()}"-->
+<!--                    th:text="${status.name()}"-->
+<!--                    th:selected="${statusfilter?.name() == status.name()}">-->
+<!--            </option>-->
+<!--        </th:block>-->
+<!--    </select>-->
+<!--    <button type="submit">Filter</button>-->
+<!--</form>-->
+
+
+
+<br>
+
+<table th:if="${customers}">
+    <thead>
+    <tr>
+        <td>ID Customer</td>
+        <td>Customer Name</td>
+        <td>Customer Dob</td>
+        <td>Customer Email</td>
+        <td>View</td>
+        <td>Action</td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="customer : ${customers}">
+        <td th:text="${customer.id}"></td>
+        <td th:text="${customer.name}"></td>
+        <td th:text="${customer.dob}"></td>
+        <td th:text="${customer.email}"></td>
+        <td><a th:href="@{/customers/detail/{id}(id=${customer.id})}">View Details</a></td>
+        <td>
+            <form th:action="@{/customers/delete/{id}(id=${customer.id})}" method="post">
+                <button type="submit"  onclick="return confirm('Are you sure you want to delete this Customer?')">Delete</button>
+            </form>
+            <a th:href="@{/customers/edit/{id}(id=${customer.id})}">Edit</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
